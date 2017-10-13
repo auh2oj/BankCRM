@@ -47,6 +47,9 @@ public class Customer {
 	@Column(length=10)
 	private String status;
 	
+	@Column(length=100)
+	private String email;
+	
 	public String getName() {
 		return name;
 	}
@@ -98,12 +101,19 @@ public class Customer {
 	public int getCid() {
 		return cid;
 	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	@Override
 	public String toString() {
 		return "Customer [cid=" + cid + ", name=" + name + ", age=" + age + ", address=" + address + ", contact="
 				+ contact + ", loan=" + loan + ", ssn=" + ssn + ", requestDate=" + requestDate + ", status=" + status
-				+ "]";
+				+ ", email=" + email + "]";
 	}
+
 	
 }
 
