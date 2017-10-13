@@ -103,6 +103,10 @@ public class BankDaoImpl extends HibernateDaoSupport implements BankDao {
 		
 		// Persist the assignment
 		super.getHibernateTemplate().save(aca);
+		
+		//Change Customer status to Assigned
+		Customer customer = customerList.get(0);
+		customer.setStatus("Assigned");
+		super.getHibernateTemplate().update(customer);
 	}
-
 }

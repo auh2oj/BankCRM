@@ -43,6 +43,7 @@ public class Customer {
 	private Date requestDate; // date that request was sent
 	
 	// status can be Pending, Accepted, or Rejected depending on the discretion of the Bank Manager
+	// status can also be Assigned if the Team Leader has assigned the Customer to an Agent
 	@Column(length=10)
 	private String status;
 	
