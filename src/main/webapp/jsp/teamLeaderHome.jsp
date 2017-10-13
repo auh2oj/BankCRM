@@ -9,6 +9,8 @@
 </script>
 
 <script>
+var contextPath = "${pageContext.request.contextPath}";
+
 /**
  * Function that renders the online Agents and accepted Customers by
  submitting an AJAX request to the server.
@@ -27,6 +29,7 @@ $(document).ready(function(){
 				console.log(jsonData);
 				for (var i = 0; i < jsonData.length; i++) {
 					showOnlineAgents(jsonData[i]);
+					$("#chooseAgent").append("<option>"+jsonData[i]+"</option>")
 				}
 			},
 			error : function(data, status, er) {
@@ -49,6 +52,8 @@ $(document).ready(function(){
 			console.log(jsonData);
 			for (var i = 0; i < jsonData.length; i++) {
 				showAcceptedCustomers(jsonData[i]);
+				$("#chooseCustomer").append("<option>"+jsonData[i].cid+"</option>")
+				//customerList.push(jsonData[i]);
 			}
 		},
 		error : function(data, status, er) {
@@ -82,15 +87,38 @@ $(document).ready(function(){
 	);//end of ajax call
 });
 
+	function assign() {
+		var agent = $("#chooseAgent option:selected").val();
+		var cid = $("#chooseCustomer option:selected").val();
+		var purl = "teamLeaderHomeAssign/" + agent + "/" + cid;
+		console.log("here");
+		$.ajax({
+			url : purl,
+			type : 'PUT',
+			dataType : 'json',
+			contentType : 'application/json',
+			mimeType : 'application/json',
+			data : {},
+			success : function(jsonData) { //data= this.responseText
+				//data is JavaScript object against JSON response coming fromm the server
+				console.log("jsonData.status " + jsonData.status);
+				if (jsonData.status == "success") {
+					console.log("success");
+				} else {
+					alert("Sorry! data could not be updated");
+				}
+			}
+		});
+		window.location.reload();
+	}
+
 	function showOnlineAgents(agentName) {
 		var table = document.getElementById("activeAgentsTable");
 		
 		var tr = document.createElement("tr");
-		var td = document.createElement("td");
-		var txt = document.createTextNode(agentName);
 		
-		td.appendChild(txt);
-		tr.appendChild(td);
+		generateCell(tr, agentName);
+		
 		table.appendChild(tr);
 	}
 	
@@ -154,6 +182,15 @@ $(document).ready(function(){
     		</table>
     		<br/><br/><br/><br/>
 	</div>
+	
+	
+	<!-- Assign Customers to Agents -->
+	<div id="agentCustomerAssign">
+		<select id="chooseAgent"></select>
+		<select id="chooseCustomer"></select>
+		<button class="btn btn-danger" id="Button" onclick="assign()">Assign</button>
+	</div>
+	
 	
 	<!-- Show accepted customers here -->
 	<div id="acceptedCustomers">

@@ -118,6 +118,9 @@ public class BankController {
 			consumes= {"application/json"},
 			produces= {"application/json"})
 	public void assign(@PathVariable("a") String agentUsername, @PathVariable("cid") int cid) {
+		System.out.println("In controller");
+		System.out.println("Agent Username: " + agentUsername);
+		System.out.println("Customer ID: " + cid);
 		bankService.assign(agentUsername, cid);
 	}
 	

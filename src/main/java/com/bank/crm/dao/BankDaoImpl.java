@@ -102,7 +102,7 @@ public class BankDaoImpl extends HibernateDaoSupport implements BankDao {
 		aca.setStatus(1);
 		
 		// Persist the assignment
-		super.getHibernateTemplate().update(aca);
+		super.getHibernateTemplate().save(aca);
 	}
 
 }
